@@ -1,0 +1,11 @@
+/api/web/bundles/
+/api/app/bootstrap.php.cache
+/api/app/cache/*
+/api/app/config/parameters.yml
+/api/app/logs/*
+!/api/app/cache/.gitkeep
+!/api/app/logs/.gitkeep
+.idea
+/api/app/phpunit.xml
+/api/build/
+/api/vendor/
