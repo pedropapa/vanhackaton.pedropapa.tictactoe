@@ -1,7 +1,6 @@
 core_game:
-    resource: "@CoreGameBundle/Controller/"
-    type:     annotation
-    prefix:   /
+    resource: "@CoreGameBundle/Resources/config/routing.yml"
+    prefix:   api/
 
 
 app:

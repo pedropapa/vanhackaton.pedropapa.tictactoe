@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "946cbc6e68a6b76a2a15e2dc81565c1b",
-    "content-hash": "ba9e99165ff40b3f5dd08380ef8165ea",
+    "hash": "6c2804e80b7c16ccf9fc6e44d3f13465",
+    "content-hash": "2f791bce76ee50855811babd8e3e8134",
     "packages": [
         {
             "name": "belka/bizlay-bundle",
