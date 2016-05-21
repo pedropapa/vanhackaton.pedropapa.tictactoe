@@ -70,7 +70,7 @@ class Grid extends \Belka\BizlayBundle\Entity\AbstractEntity
     /**
      * @var bool
      *
-     * @ORM\Column(name="fl_tied", type="boolean")
+     * @ORM\Column(name="fl_tied", type="boolean", nullable=true)
      */
     private $isTied;
 

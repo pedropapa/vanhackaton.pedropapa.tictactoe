@@ -52,7 +52,7 @@ class GridCheckController extends GameController
 
         try {
             $this->getService()->save($dto);
-            return $this->renderJson($this->getSavedId());
+            return $this->getService()->getGridFromGridCheck();
         } catch (UniqueException $e) {
             throw new BadRequestHttpException($e->getMessage());
         } catch (ValidationException $e) {

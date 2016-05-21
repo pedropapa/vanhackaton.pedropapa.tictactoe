@@ -71,6 +71,23 @@ class GridCheckService extends AbstractEntityService
     public $gridService;
 
     /**
+     * @var PlayerGridService
+     *
+     * @DI\Inject("playergrid.service")
+     */
+    public $playerGridService;
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return \Core\GameBundle\Entity\GridCheck
+     */
+    protected function getRootEntity($id = null)
+    {
+        return parent::getRootEntity($id);
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @return \Core\GameBundle\Repository\GridCheckRepository
@@ -100,6 +117,22 @@ class GridCheckService extends AbstractEntityService
     }
 
     /**
+     * Método para lidar com toda e qualquer situação XGH que não se adeque nas anteriores
+     *
+     * @example  Entidades que não são acessíveis pela estrutura da RootEntity
+     */
+    public function preFlush(ServiceDto $dto)
+    {
+        $gridCheck = $this->getRootEntity();
+
+        $gridCheck->getGrid()->addGridCheck($gridCheck);
+
+        $grid = $this->gridService->flushGridResult($gridCheck->getGrid());
+
+        $gridCheck->setGrid($grid);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function validateRootEntity(ServiceDto $dto)
@@ -116,7 +149,7 @@ class GridCheckService extends AbstractEntityService
                 $rowpos = $dto->request->get('rowPos');
 
                 if(is_integer($colpos) && is_integer($rowpos)) {
-                    if(($colpos >= 0 && $colpos <= $this->max_grid_cols) && ($rowpos >= 0 && $rowpos <= $this->max_grid_rows)) {
+                    if(($colpos > 0 && $colpos <= $this->max_grid_cols) && ($rowpos > 0 && $rowpos <= $this->max_grid_rows)) {
                         return true;
                     } else {
                         throw new \Exception("Invalid position.");
@@ -153,9 +186,16 @@ class GridCheckService extends AbstractEntityService
         if($this->gridService->isGridFinished($grid)) {
             throw new \Exception("Grid is finished already");
         }
-        
+
         if(count($grid->getGridPlayers()) !== $this->max_grid_players) {
-            throw new \Exception($this->max_grid_players . " are needed to start up the game.");
+            throw new \Exception($this->max_grid_players . " players are needed to start up the game.");
+        }
+
+        /** @var Player $player */
+        $player = $this->securityTokenStorage->getToken()->getUser();
+
+        if(!$this->playerGridService->getPlayerGrid($player, $grid)) {
+            throw new \Exception("Player is not joined in the grid.");
         }
 
         $posAlreadyChecked = $this->getGridByPos($grid, $colpos, $rowpos);
@@ -168,5 +208,10 @@ class GridCheckService extends AbstractEntityService
     public function getGridByPos(Grid $grid, $colpos, $rowpos)
     {
         return $this->getRootRepository()->getGridByPos($grid, $colpos, $rowpos);
+    }
+    
+    public function getGridFromGridCheck()
+    {
+        return $this->rootEntity->getGrid();
     }
 }
