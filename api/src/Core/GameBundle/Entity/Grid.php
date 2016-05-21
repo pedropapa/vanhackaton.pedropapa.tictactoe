@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Core\GameBundle\Repository\GridRepository")
  * @Doctrine\Common\Annotations\Annotation\IgnoreAnnotation("innerEntity")
  */
-class Grid
+class Grid extends \Belka\BizlayBundle\Entity\AbstractEntity
 {
     /**
      * @var int

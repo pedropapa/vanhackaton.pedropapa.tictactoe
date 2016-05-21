@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="tb_player_grid")
  * @ORM\Entity(repositoryClass="Core\GameBundle\Repository\PlayerGridRepository")
  */
-class PlayerGrid
+class PlayerGrid extends \Belka\BizlayBundle\Entity\AbstractEntity
 {
     /**
      * @var int

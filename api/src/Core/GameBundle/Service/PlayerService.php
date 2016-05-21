@@ -4,7 +4,12 @@ namespace Core\GameBundle\Service;
 
 use \Belka\BizlayBundle\Service\ServiceDto;
 use \Belka\CrudBundle\Service\AbstractEntityService;
+use Core\GameBundle\Entity\Player;
+use AppBundle\Security\Authentication\Token\LoginToken;
 use \JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 
 /**
@@ -32,6 +37,37 @@ class PlayerService extends AbstractEntityService
     public $debug = false;
 
     /**
+     * @var TokenStorage
+     *
+     * @DI\Inject("security.token_storage")
+     */
+    public $securityTokenStorage;
+
+    /**
+     * @var Session
+     *
+     * @DI\Inject("session")
+     */
+    public $session;
+
+    /**
+     * @var Container
+     *
+     * @DI\Inject("service_container")
+     */
+    public $container;
+
+    /**
+     * @inheritdoc
+
+     * @return Player
+     */
+    protected function getRootEntity($id = null)
+    {
+        return parent::getRootEntity($id);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getFormData($entityData = null)
@@ -51,6 +87,9 @@ class PlayerService extends AbstractEntityService
      */
     public function validateRootEntity(ServiceDto $dto)
     {
+        if(!$dto->request->has('dsName')) {
+            throw new \Exception("Invalid params");
+        }
     }
 
     /**
@@ -72,6 +111,7 @@ class PlayerService extends AbstractEntityService
      */
     public function preFlush(ServiceDto $dto)
     {
+        $this->getRootEntity()->setDsKey(md5(time()));
     }
 
     /**
@@ -79,6 +119,13 @@ class PlayerService extends AbstractEntityService
      */
     public function postSave(ServiceDto $dto)
     {
+        if($this->securityTokenStorage->getToken()->getUser() instanceof Player) {
+            $this->securityTokenStorage->setToken(null);
+            $this->session->invalidate();
+        }
+
+        $token = new LoginToken($this->getRootEntity(), array($this->container->getParameter('default_role')));
+        $this->securityTokenStorage->setToken($token);
     }
 
     /**

@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Core\GameBundle\Repository\GridCheckRepository")
  * @Doctrine\Common\Annotations\Annotation\IgnoreAnnotation("innerEntity")
  */
-class GridCheck
+class GridCheck extends \Belka\BizlayBundle\Entity\AbstractEntity
 {
     /**
      * @var int

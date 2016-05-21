@@ -4,6 +4,7 @@ namespace Core\GameBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Player
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Core\GameBundle\Repository\PlayerRepository")
  * @Doctrine\Common\Annotations\Annotation\IgnoreAnnotation("innerEntity")
  */
-class Player
+class Player extends \Belka\BizlayBundle\Entity\AbstractEntity implements UserInterface
 {
     /**
      * @var int
@@ -57,11 +58,12 @@ class Player
      */
     private $playerGrids;
 
+
+
     public function __construct()
     {
         $this->setDtCreate(new \DateTime);
     }
-
 
     /**
      * Get id
@@ -163,5 +165,75 @@ class Player
     public function getDsKey()
     {
         return $this->dsKey;
+    }
+
+    /**
+     * Add playerGrids
+     *
+     * @param \Core\GameBundle\Entity\PlayerGrid $playerGrids
+     * @return Player
+     */
+    public function addPlayerGrid(\Core\GameBundle\Entity\PlayerGrid $playerGrids)
+    {
+        $this->playerGrids[] = $playerGrids;
+
+        return $this;
+    }
+
+    /**
+     * Remove playerGrids
+     *
+     * @param \Core\GameBundle\Entity\PlayerGrid $playerGrids
+     */
+    public function removePlayerGrid(\Core\GameBundle\Entity\PlayerGrid $playerGrids)
+    {
+        $this->playerGrids->removeElement($playerGrids);
+    }
+
+    /**
+     * Get playerGrids
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPlayerGrids()
+    {
+        return $this->playerGrids;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getRoles() {
+
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPassword() {
+        return $this->getDsKey();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSalt() {
+
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getUsername()
+    {
+        return $this->getDsName();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function eraseCredentials()
+    {
+
     }
 }
