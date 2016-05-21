@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace Core\GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -35,6 +35,13 @@ class Player
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive = true;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ds_name", type="string", length=50)
+     */
+    private $dsName;
 
     /**
      * @var string
@@ -125,5 +132,28 @@ class Player
     public function getDsKey()
     {
         return $this->dsKey;
+    }
+
+    /**
+     * Set dsName
+     *
+     * @param string $dsName
+     * @return Player
+     */
+    public function setDsName($dsName)
+    {
+        $this->dsName = $dsName;
+
+        return $this;
+    }
+
+    /**
+     * Get dsName
+     *
+     * @return string 
+     */
+    public function getDsName()
+    {
+        return $this->dsName;
     }
 }

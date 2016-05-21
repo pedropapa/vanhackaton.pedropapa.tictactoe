@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace Core\GameBundle\Controller;
 
 use \FOS\RestBundle\Controller\Annotations as Rest;
 use \Belka\CrudBundle\Controller\ControllerRestCrudAbstract;

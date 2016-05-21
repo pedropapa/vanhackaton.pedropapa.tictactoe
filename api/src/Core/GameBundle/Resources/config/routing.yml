@@ -1,0 +1,4 @@
+
+core_gamebundle_player:
+  type: rest
+  resource: Core\GameBundle\Controller\PlayerController

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Service;
+namespace Core\GameBundle\Service;
 
 use \Belka\BizlayBundle\Service\ServiceDto;
 use \Belka\CrudBundle\Service\AbstractEntityService;

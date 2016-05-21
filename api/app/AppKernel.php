@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new \Belka\BizlayBundle\BizlayBundle(),
             new \Belka\CrudBundle\CrudBundle(),
             new AppBundle\AppBundle(),
+            new Core\GameBundle\CoreGameBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

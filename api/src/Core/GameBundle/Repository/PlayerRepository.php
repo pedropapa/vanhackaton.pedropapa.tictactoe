@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace Core\GameBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
