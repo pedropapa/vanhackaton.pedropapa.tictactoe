@@ -44,7 +44,7 @@ class PlayerGrid extends \Belka\BizlayBundle\Entity\AbstractEntity
      *
      * @ORM\Column(name="is_active", type="boolean")
      */
-    private $isActive;
+    private $isActive = true;
 
     /**
      * @var \DateTime
