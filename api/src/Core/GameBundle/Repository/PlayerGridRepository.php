@@ -2,6 +2,8 @@
 
 namespace Core\GameBundle\Repository;
 
+use Core\GameBundle\Entity\Grid;
+use Core\GameBundle\Entity\Player;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -12,4 +14,43 @@ use Doctrine\ORM\EntityRepository;
  */
 class PlayerGridRepository extends \Belka\BizlayBundle\Repository\AbstractRepository
 {
+    public function getPlayerGrid(Player $player, Grid $grid)
+    {
+        $qb = $this->createQueryBuilder('pg');
+
+        $qb
+            ->join('pg.grid', 'g')
+            ->join('pg.player', 'p')
+            ->where($qb->expr()->eq('pg.grid', ':grid'))
+            ->andWhere($qb->expr()->eq('pg.player', ':player'))
+            ->andWhere($qb->expr()->eq('pg.isActive', ':true'))
+            ->andWhere($qb->expr()->eq('g.isActive', ':true'))
+            ->andWhere($qb->expr()->eq('p.isActive', ':true'))
+            ->setParameters(array(
+                'grid' => $grid,
+                'player' => $player,
+                'true' => true
+            ))
+        ;
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    public function getGridPlayers(Grid $grid)
+    {
+        $qb = $this->createQueryBuilder('pg');
+
+        $qb
+            ->join('pg.grid', 'g')
+            ->where($qb->expr()->eq('pg.grid', ':grid'))
+            ->andWhere($qb->expr()->eq('pg.isActive', ':true'))
+            ->andWhere($qb->expr()->eq('g.isActive', ':true'))
+            ->setParameters(array(
+                'grid' => $grid,
+                'true' => true
+            ))
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }

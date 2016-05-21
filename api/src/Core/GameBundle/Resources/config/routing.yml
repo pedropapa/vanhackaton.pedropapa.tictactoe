@@ -10,3 +10,7 @@ core_gamebundle_grid:
 core_gamebundle_gridcheck:
   type: rest
   resource: Core\GameBundle\Controller\GridCheckController
+
+core_gamebundle_playergrid:
+  type: rest
+  resource: Core\GameBundle\Controller\PlayerGridController

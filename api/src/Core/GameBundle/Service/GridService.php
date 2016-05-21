@@ -4,6 +4,8 @@ namespace Core\GameBundle\Service;
 
 use \Belka\BizlayBundle\Service\ServiceDto;
 use \Belka\CrudBundle\Service\AbstractEntityService;
+use Core\GameBundle\Entity\Grid;
+use Core\GameBundle\Entity\Player;
 use \JMS\DiExtraBundle\Annotation as DI;
 
 
@@ -30,6 +32,12 @@ class GridService extends AbstractEntityService
      * {@inheritdoc}
      */
     public $debug = false;
+
+    /**
+     * @var PlayerGridService
+     * @DI\Inject("playergrid.service")
+     */
+    public $playerGridService;
 
     /**
      * {@inheritdoc}
@@ -111,5 +119,10 @@ class GridService extends AbstractEntityService
     public function checkUserDeletePermission($item)
     {
         return true;
+    }
+
+    public function getGrid()
+    {
+        return $this->getRootEntity();
     }
 }

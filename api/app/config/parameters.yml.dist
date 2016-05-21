@@ -18,4 +18,8 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
 
-    default_role: ROLE_USER
+    # Tic-Tac-Toe App Config
+    default_role: ROLE_USER # Default role for symfony access security.
+
+    # Tic-Tac-Toe Game Config
+    max_grid_players: 2

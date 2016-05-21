@@ -2,6 +2,7 @@
 
 namespace Core\GameBundle\Repository;
 
+use Core\GameBundle\Entity\Player;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -12,4 +13,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class GridRepository extends \Belka\BizlayBundle\Repository\AbstractRepository
 {
+    public function getPlayerGrids(Player $player)
+    {
+    }
 }

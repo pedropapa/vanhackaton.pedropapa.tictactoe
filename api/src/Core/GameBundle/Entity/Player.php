@@ -5,6 +5,7 @@ namespace Core\GameBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Player
@@ -49,6 +50,7 @@ class Player extends \Belka\BizlayBundle\Entity\AbstractEntity implements UserIn
      * @var string
      *
      * @ORM\Column(name="ds_key", type="string", length=255, unique=true)
+     * @Serializer\Exclude
      */
     private $dsKey;
 

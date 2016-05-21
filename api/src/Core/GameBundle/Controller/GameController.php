@@ -27,7 +27,7 @@ class GameController extends ControllerRestCrudAbstract
      * @var ContainerInterface
      */
     public $container;
-    
+
     /**
      * Get logged in session player.
      *
@@ -40,11 +40,6 @@ class GameController extends ControllerRestCrudAbstract
 
         /** @var Player $player */
         $player = $this->securityTokenStorage->getToken()->getUser();
-
-        /** @var ServiceDto $dto */
-        $dto = $this->getDto();
-
-        $dto->request->set('player', $player);
 
         return $player;
     }
