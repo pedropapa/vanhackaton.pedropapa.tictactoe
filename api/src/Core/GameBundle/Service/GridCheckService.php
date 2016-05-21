@@ -4,7 +4,11 @@ namespace Core\GameBundle\Service;
 
 use \Belka\BizlayBundle\Service\ServiceDto;
 use \Belka\CrudBundle\Service\AbstractEntityService;
+use Core\GameBundle\Entity\Grid;
+use Core\GameBundle\Entity\GridCheck;
+use Core\GameBundle\Entity\Player;
 use \JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 
 /**
@@ -32,6 +36,51 @@ class GridCheckService extends AbstractEntityService
     public $debug = false;
 
     /**
+     * @var integer
+     *
+     * @DI\Inject("%max_grid_cols%")
+     */
+    public $max_grid_cols;
+
+    /**
+     * @var integer
+     *
+     * @DI\Inject("%max_grid_rows%")
+     */
+    public $max_grid_rows;
+
+    /**
+     * @var integer
+     *
+     * @DI\Inject("%max_grid_players%")
+     */
+    public $max_grid_players;
+
+    /**
+     * @var TokenStorage
+     *
+     * @DI\Inject("security.token_storage")
+     */
+    public $securityTokenStorage;
+
+    /**
+     * @var GridService
+     *
+     * @DI\Inject("grid.service")
+     */
+    public $gridService;
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return \Core\GameBundle\Repository\GridCheckRepository
+     */
+    protected function getRootRepository()
+    {
+        return parent::getRootRepository();
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getFormData($entityData = null)
@@ -44,6 +93,10 @@ class GridCheckService extends AbstractEntityService
      */
     public function preSave(ServiceDto $dto)
     {
+        /** @var Player $player */
+        $player = $this->securityTokenStorage->getToken()->getUser();
+
+        $dto->request->set('player', $player);
     }
 
     /**
@@ -51,6 +104,32 @@ class GridCheckService extends AbstractEntityService
      */
     public function validateRootEntity(ServiceDto $dto)
     {
+        if($dto->request->has('grid')) {
+            $grid = $dto->request->get('grid');
+
+            if(!isset($grid['id'])) {
+                throw new \Exception("Grid id must be informed.");
+            }
+
+            if($dto->request->has('colPos') && $dto->request->has('rowPos')) {
+                $colpos = $dto->request->get('colPos');
+                $rowpos = $dto->request->get('rowPos');
+
+                if(is_integer($colpos) && is_integer($rowpos)) {
+                    if(($colpos >= 0 && $colpos <= $this->max_grid_cols) && ($rowpos >= 0 && $rowpos <= $this->max_grid_rows)) {
+                        return true;
+                    } else {
+                        throw new \Exception("Invalid position.");
+                    }
+                } else {
+                    throw new \Exception("Not a valid position value.");
+                }
+            } else {
+                throw new \Exception("Position must be informed.");
+            }
+        } else {
+            throw new \Exception("Grid must be informed.");
+        }
     }
 
     /**
@@ -58,58 +137,36 @@ class GridCheckService extends AbstractEntityService
      */
     public function verifyRootEntity(ServiceDto $dto)
     {
+        $grid = $dto->request->get('grid');
+        $gridId = $grid['id'];
+
+        $colpos = $dto->request->get('colPos');
+        $rowpos = $dto->request->get('rowPos');
+
+        /** @var Grid $grid */
+        $grid = $this->gridService->getRootEntity($gridId);
+
+        if(!$grid) {
+            throw new \Exception("Invalid grid.");
+        }
+
+        if($this->gridService->isGridFinished($grid)) {
+            throw new \Exception("Grid is finished already");
+        }
+        
+        if(count($grid->getGridPlayers()) !== $this->max_grid_players) {
+            throw new \Exception($this->max_grid_players . " are needed to start up the game.");
+        }
+
+        $posAlreadyChecked = $this->getGridByPos($grid, $colpos, $rowpos);
+
+        if($posAlreadyChecked instanceof GridCheck) {
+            throw new \Exception("Position already Checked");
+        }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function handleUploads(ServiceDto $dto)
+    public function getGridByPos(Grid $grid, $colpos, $rowpos)
     {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function preFlush(ServiceDto $dto)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function postSave(ServiceDto $dto)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function removeEntity($id)
-    {
-        return parent::removeEntity($id);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function checkUserEditPermission($item)
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function checkUserViewPermission($item)
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function checkUserDeletePermission($item)
-    {
-        return true;
+        return $this->getRootRepository()->getGridByPos($grid, $colpos, $rowpos);
     }
 }

@@ -39,90 +39,17 @@ class GridService extends AbstractEntityService
      */
     public $playerGridService;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getFormData($entityData = null)
-    {
-        return parent::getFormData($entityData);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function preSave(ServiceDto $dto)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function validateRootEntity(ServiceDto $dto)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function verifyRootEntity(ServiceDto $dto)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function handleUploads(ServiceDto $dto)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function preFlush(ServiceDto $dto)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function postSave(ServiceDto $dto)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function removeEntity($id)
-    {
-        return parent::removeEntity($id);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function checkUserEditPermission($item)
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function checkUserViewPermission($item)
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function checkUserDeletePermission($item)
-    {
-        return true;
-    }
-
     public function getGrid()
     {
         return $this->getRootEntity();
+    }
+
+    public function isGridFinished(Grid $grid)
+    {
+        if($grid->getWinner() instanceof Player || $grid->getIsTied()) {
+            return true;
+        }
+
+        return false;
     }
 }

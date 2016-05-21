@@ -60,7 +60,11 @@ class Player extends \Belka\BizlayBundle\Entity\AbstractEntity implements UserIn
      */
     private $playerGrids;
 
-
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Core\GameBundle\Entity\Grid", mappedBy="winner")
+     */
+    private $wins;
 
     public function __construct()
     {
@@ -237,5 +241,38 @@ class Player extends \Belka\BizlayBundle\Entity\AbstractEntity implements UserIn
     public function eraseCredentials()
     {
 
+    }
+
+    /**
+     * Add wins
+     *
+     * @param \Core\GameBundle\Entity\Grid $wins
+     * @return Player
+     */
+    public function addWin(\Core\GameBundle\Entity\Grid $wins)
+    {
+        $this->wins[] = $wins;
+
+        return $this;
+    }
+
+    /**
+     * Remove wins
+     *
+     * @param \Core\GameBundle\Entity\Grid $wins
+     */
+    public function removeWin(\Core\GameBundle\Entity\Grid $wins)
+    {
+        $this->wins->removeElement($wins);
+    }
+
+    /**
+     * Get wins
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getWins()
+    {
+        return $this->wins;
     }
 }

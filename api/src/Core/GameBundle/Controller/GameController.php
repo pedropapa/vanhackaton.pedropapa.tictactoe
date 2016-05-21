@@ -19,11 +19,6 @@ class GameController extends ControllerRestCrudAbstract
     public $securityTokenStorage;
 
     /**
-     * @var Player
-     */
-    private $sessionPlayer = null;
-
-    /**
      * @var ContainerInterface
      */
     public $container;
@@ -42,5 +37,15 @@ class GameController extends ControllerRestCrudAbstract
         $player = $this->securityTokenStorage->getToken()->getUser();
 
         return $player;
+    }
+
+    protected function getMaxGridCols()
+    {
+        return $this->getParameter('max_grid_cols');
+    }
+
+    protected function getMaxGridRows()
+    {
+        return $this->getParameter('max_grid_rows');
     }
 }

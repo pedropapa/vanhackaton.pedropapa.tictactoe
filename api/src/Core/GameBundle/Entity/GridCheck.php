@@ -48,6 +48,20 @@ class GridCheck extends \Belka\BizlayBundle\Entity\AbstractEntity
     private $isActive = true;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="nu_col_pos", type="integer")
+     */
+    private $colPos;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nu_row_pos", type="integer")
+     */
+    private $rowPos;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="dt_create", type="datetime")
@@ -159,5 +173,51 @@ class GridCheck extends \Belka\BizlayBundle\Entity\AbstractEntity
     public function getPlayer()
     {
         return $this->player;
+    }
+
+    /**
+     * Set colPos
+     *
+     * @param integer $colPos
+     * @return GridCheck
+     */
+    public function setColPos($colPos)
+    {
+        $this->colPos = $colPos;
+
+        return $this;
+    }
+
+    /**
+     * Get colPos
+     *
+     * @return integer 
+     */
+    public function getColPos()
+    {
+        return $this->colPos;
+    }
+
+    /**
+     * Set rowPos
+     *
+     * @param integer $rowPos
+     * @return GridCheck
+     */
+    public function setRowPos($rowPos)
+    {
+        $this->rowPos = $rowPos;
+
+        return $this;
+    }
+
+    /**
+     * Get rowPos
+     *
+     * @return integer 
+     */
+    public function getRowPos()
+    {
+        return $this->rowPos;
     }
 }
