@@ -95,24 +95,10 @@ class PlayerService extends AbstractEntityService
     /**
      * {@inheritdoc}
      */
-    public function verifyRootEntity(ServiceDto $dto)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function handleUploads(ServiceDto $dto)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function preFlush(ServiceDto $dto)
     {
         // Set player's identifier key (not currently used in the project, it should be used on the front-end).
-        $this->getRootEntity()->setDsKey(md5(time()));
+        $this->getRootEntity()->setDsKey(md5(rand(0, 10000000000000)));
     }
 
     /**
@@ -127,37 +113,5 @@ class PlayerService extends AbstractEntityService
 
         $token = new LoginToken($this->getRootEntity(), array($this->container->getParameter('default_role')));
         $this->securityTokenStorage->setToken($token);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function removeEntity($id)
-    {
-        return parent::removeEntity($id);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function checkUserEditPermission($item)
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function checkUserViewPermission($item)
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function checkUserDeletePermission($item)
-    {
-        return true;
     }
 }
