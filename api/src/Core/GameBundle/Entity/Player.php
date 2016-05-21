@@ -2,13 +2,14 @@
 
 namespace Core\GameBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Player
  *
  * @ORM\Table(name="tb_player")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\PlayerRepository")
+ * @ORM\Entity(repositoryClass="Core\GameBundle\Repository\PlayerRepository")
  * @Doctrine\Common\Annotations\Annotation\IgnoreAnnotation("innerEntity")
  */
 class Player
@@ -16,7 +17,7 @@ class Player
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="co_player", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -50,15 +51,22 @@ class Player
      */
     private $dsKey;
 
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Core\GameBundle\Entity\PlayerGrid", mappedBy="player")
+     */
+    private $playerGrids;
+
     public function __construct()
     {
         $this->setDtCreate(new \DateTime);
     }
 
+
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -81,7 +89,7 @@ class Player
     /**
      * Get dtCreate
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getDtCreate()
     {
@@ -104,34 +112,11 @@ class Player
     /**
      * Get isActive
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getIsActive()
     {
         return $this->isActive;
-    }
-
-    /**
-     * Set dsKey
-     *
-     * @param string $dsKey
-     * @return Player
-     */
-    public function setDsKey($dsKey)
-    {
-        $this->dsKey = $dsKey;
-
-        return $this;
-    }
-
-    /**
-     * Get dsKey
-     *
-     * @return string
-     */
-    public function getDsKey()
-    {
-        return $this->dsKey;
     }
 
     /**
@@ -155,5 +140,28 @@ class Player
     public function getDsName()
     {
         return $this->dsName;
+    }
+
+    /**
+     * Set dsKey
+     *
+     * @param string $dsKey
+     * @return Player
+     */
+    public function setDsKey($dsKey)
+    {
+        $this->dsKey = $dsKey;
+
+        return $this;
+    }
+
+    /**
+     * Get dsKey
+     *
+     * @return string 
+     */
+    public function getDsKey()
+    {
+        return $this->dsKey;
     }
 }
