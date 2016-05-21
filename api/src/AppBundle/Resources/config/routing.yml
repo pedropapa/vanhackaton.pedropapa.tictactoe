@@ -1,0 +1,4 @@
+
+appbundle_player:
+  type: rest
+  resource: AppBundle\Controller\PlayerController
