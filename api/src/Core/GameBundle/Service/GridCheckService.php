@@ -206,7 +206,7 @@ class GridCheckService extends AbstractEntityService
         $posAlreadyChecked = $this->getGridByPos($grid, $colpos, $rowpos);
 
         if($posAlreadyChecked instanceof GridCheck) {
-            throw new \Exception("Position already Checked");
+            throw new \Exception("Position already checked");
         }
     }
 

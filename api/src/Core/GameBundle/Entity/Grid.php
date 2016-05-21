@@ -38,15 +38,6 @@ class Grid extends \Belka\BizlayBundle\Entity\AbstractEntity
     private $dtCreate;
 
     /**
-     * @var \Core\GameBundle\Entity\UltimateGrid
-     * @ORM\ManyToOne(targetEntity="\Core\GameBundle\Entity\UltimateGrid", inversedBy="grids")
-     * @ORM\JoinColumns({
-     * @ORM\JoinColumn(name="co_ultimate_grid", referencedColumnName="co_ultimate_grid", nullable=true)
-     * })
-     */
-    private $ultimateGrid;
-
-    /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Core\GameBundle\Entity\PlayerGrid", mappedBy="grid")
      */
@@ -133,29 +124,6 @@ class Grid extends \Belka\BizlayBundle\Entity\AbstractEntity
     public function getDtCreate()
     {
         return $this->dtCreate;
-    }
-
-    /**
-     * Set ultimateGrid
-     *
-     * @param \Core\GameBundle\Entity\UltimateGrid $ultimateGrid
-     * @return Grid
-     */
-    public function setUltimateGrid(\Core\GameBundle\Entity\UltimateGrid $ultimateGrid = null)
-    {
-        $this->ultimateGrid = $ultimateGrid;
-
-        return $this;
-    }
-
-    /**
-     * Get ultimateGrid
-     *
-     * @return \Core\GameBundle\Entity\UltimateGrid 
-     */
-    public function getUltimateGrid()
-    {
-        return $this->ultimateGrid;
     }
 
     /**

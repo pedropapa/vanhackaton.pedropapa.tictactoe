@@ -35,7 +35,7 @@ class GridCheck extends \Belka\BizlayBundle\Entity\AbstractEntity
      * @var \Core\GameBundle\Entity\Player
      * @ORM\ManyToOne(targetEntity="\Core\GameBundle\Entity\Player")
      * @ORM\JoinColumns({
-     * @ORM\JoinColumn(name="co_player", referencedColumnName="co_player", nullable=true)
+     *  @ORM\JoinColumn(name="co_player", referencedColumnName="co_player", nullable=true)
      * })
      */
     private $player;
@@ -76,7 +76,7 @@ class GridCheck extends \Belka\BizlayBundle\Entity\AbstractEntity
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -99,7 +99,7 @@ class GridCheck extends \Belka\BizlayBundle\Entity\AbstractEntity
     /**
      * Get isActive
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsActive()
     {
@@ -122,7 +122,7 @@ class GridCheck extends \Belka\BizlayBundle\Entity\AbstractEntity
     /**
      * Get dtCreate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDtCreate()
     {
@@ -145,7 +145,7 @@ class GridCheck extends \Belka\BizlayBundle\Entity\AbstractEntity
     /**
      * Get grid
      *
-     * @return \Core\GameBundle\Entity\Grid 
+     * @return \Core\GameBundle\Entity\Grid
      */
     public function getGrid()
     {
@@ -168,7 +168,7 @@ class GridCheck extends \Belka\BizlayBundle\Entity\AbstractEntity
     /**
      * Get player
      *
-     * @return \Core\GameBundle\Entity\Player 
+     * @return \Core\GameBundle\Entity\Player
      */
     public function getPlayer()
     {
@@ -191,7 +191,7 @@ class GridCheck extends \Belka\BizlayBundle\Entity\AbstractEntity
     /**
      * Get colPos
      *
-     * @return integer 
+     * @return integer
      */
     public function getColPos()
     {
@@ -214,7 +214,7 @@ class GridCheck extends \Belka\BizlayBundle\Entity\AbstractEntity
     /**
      * Get rowPos
      *
-     * @return integer 
+     * @return integer
      */
     public function getRowPos()
     {
