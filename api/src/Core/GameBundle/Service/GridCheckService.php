@@ -7,6 +7,7 @@ use \Belka\CrudBundle\Service\AbstractEntityService;
 use Core\GameBundle\Entity\Grid;
 use Core\GameBundle\Entity\GridCheck;
 use Core\GameBundle\Entity\Player;
+use Doctrine\Common\Collections\Collection;
 use \JMS\DiExtraBundle\Annotation as DI;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
@@ -198,6 +199,10 @@ class GridCheckService extends AbstractEntityService
             throw new \Exception("Player is not joined in the grid.");
         }
 
+        if($this->checkTwiceInARow($player, $grid->getGridChecks())) {
+            throw new \Exception("Player can't check twice in a row.");
+        }
+
         $posAlreadyChecked = $this->getGridByPos($grid, $colpos, $rowpos);
 
         if($posAlreadyChecked instanceof GridCheck) {
@@ -213,5 +218,18 @@ class GridCheckService extends AbstractEntityService
     public function getGridFromGridCheck()
     {
         return $this->rootEntity->getGrid();
+    }
+
+    private function checkTwiceInARow(Player $player, Collection $gridChecks)
+    {
+        $gridChecksArray = $gridChecks->toArray();
+
+        $lastCheck = end($gridChecksArray);
+
+        if($lastCheck) {
+            if($lastCheck->getPlayer() && $lastCheck->getPlayer() == $player) {
+                return true;
+            }
+        }
     }
 }
