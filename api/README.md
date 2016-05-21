@@ -15,12 +15,19 @@ php bin/composer.phar install
 php app/console doctrine:schema:update --force
 php app/console server:start
 
-Here you go, you can now use the api to play the game!
+You can now use the api to play the game!
 
-Some examples:
+## How to use it.
 
 First of all, you need to get an session ID:
 curl -c ~/cookies.txt -H "Content-Type: application/json" -X POST -d '{"dsName": "Pedro"}' http://localhost:8000/app_dev.php/api/player/saves
 Response: Player's ID
 
-Then you can play around
+Then you can play around!
+
+### Create a grid:
+curl -b ~/cookies.txt -H "Content-Type: application/json" -X POST http://localhost:8000/app_dev.php/api/grid/creates
+
+### Join a grid:
+curl -b ~/cookies.txt -H "Content-Type: application/json" -X POST -d '{"grid": {id: 10}}' http://localhost:8000/app_dev.php/api/grid/joins
+

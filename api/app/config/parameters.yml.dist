@@ -23,3 +23,5 @@ parameters:
 
     # Tic-Tac-Toe Game Config
     max_grid_players: 2
+    max_grid_cols: 3
+    max_grid_rows: 3
