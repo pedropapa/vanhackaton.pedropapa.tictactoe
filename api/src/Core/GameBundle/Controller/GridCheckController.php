@@ -23,6 +23,6 @@ use \Belka\CrudBundle\Controller\ControllerRestCrudAbstract;
  * @Rest\Prefix("gridcheck")
  * @Rest\NamePrefix("api_gridcheck_")
  ******************************************************/
-class GridCheckController extends ControllerRestCrudAbstract
+class GridCheckController extends GameController
 {
 }

@@ -111,6 +111,7 @@ class PlayerService extends AbstractEntityService
      */
     public function preFlush(ServiceDto $dto)
     {
+        // Set player's identifier key (not currently used in the project, it should be used on the front-end).
         $this->getRootEntity()->setDsKey(md5(time()));
     }
 
@@ -119,7 +120,7 @@ class PlayerService extends AbstractEntityService
      */
     public function postSave(ServiceDto $dto)
     {
-        if($this->securityTokenStorage->getToken()->getUser() instanceof Player) {
+        if($this->securityTokenStorage->getToken() && $this->securityTokenStorage->getToken()->getUser() instanceof Player) {
             $this->securityTokenStorage->setToken(null);
             $this->session->invalidate();
         }

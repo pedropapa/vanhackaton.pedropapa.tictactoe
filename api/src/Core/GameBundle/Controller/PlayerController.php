@@ -23,6 +23,6 @@ use \Belka\CrudBundle\Controller\ControllerRestCrudAbstract;
  * @Rest\Prefix("player")
  * @Rest\NamePrefix("api_player_")
  ******************************************************/
-class PlayerController extends ControllerRestCrudAbstract
+class PlayerController extends GameController
 {
 }

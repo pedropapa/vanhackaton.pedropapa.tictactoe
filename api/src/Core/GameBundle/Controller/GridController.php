@@ -2,8 +2,12 @@
 
 namespace Core\GameBundle\Controller;
 
+use Belka\BizlayBundle\Service\ServiceDto;
+use Core\GameBundle\Entity\Player;
+use Core\GameBundle\Service\GridService;
 use \FOS\RestBundle\Controller\Annotations as Rest;
 use \Belka\CrudBundle\Controller\ControllerRestCrudAbstract;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
  *******************************************************
@@ -23,6 +27,36 @@ use \Belka\CrudBundle\Controller\ControllerRestCrudAbstract;
  * @Rest\Prefix("grid")
  * @Rest\NamePrefix("api_grid_")
  ******************************************************/
-class GridController extends ControllerRestCrudAbstract
+class GridController extends GameController
 {
+    /**
+     * @var TokenStorage
+     */
+    public $securityTokenStorage;
+
+    /**
+     * @inheritdoc
+     *
+     * @return GridService
+     */
+    protected function getService()
+    {
+        return parent::getService();
+    }
+
+    public function postCreateAction()
+    {
+        /** @var ServiceDto $dto */
+        $dto = $this->getDto();
+
+        return $this->getService()->save($dto);
+    }
+
+    public function postJoinAction()
+    {
+        /** @var ServiceDto $dto */
+        $dto = $this->getDto();
+
+        $this->getService()->postSave($dto);
+    }
 }
