@@ -1,12 +1,20 @@
 ## This project has been made for the 2016 Vanhackaton weekend.
-It consists in a API for the game Tic-Tac-Toe and Tic-Tac-Toe Ultimate, it uses the BizLay bundles for the back-end abstraction.
+It consists in a API for the game Tic-Tac-Toe. It also use the BizLay bundles for the back-end abstraction.
 
 
 ## About the Bizlay bundles.
 The Bizlay bundles are currently maintained by Pablo "Phackwer" Sanchez, who I had the pleasure to work here in Brasília (Brazil).
 
+## Tools used to build the project.
+- IntelliJ IDEA 2016.
+- Git.
+- MySQL Database.
+- Symfony2.8 PHP Framework.
+- OS X El Capitan.
+- OS X Built-in curl library (for tests/debug).
+
 ## Installation.
-- Create an database (name it as you like) and an user, then grant all privileges on the new table to the new user.
+- Create an database (name it as you like) and an user, then grant all privileges on the new database to the new user.
 - Edit app/config/parameters.yml with the database information you used in the step above.
 - Clone the project repo in the folder you prefer.
 
@@ -17,6 +25,30 @@ After cloning the repo, navigate to the repo's "api" folder and execute the foll
 - php app/console server:start
 
 You can now use the api to play the game!
+
+## Game logic.
+- User must hit player creation API first before creating a grid (internally the grid is a game). It will create the session cookies.
+- the api must be security protected against not logged in users.
+- Players can create grids.
+    - As many grids he wants.
+    - When creating a grid, the player automatically joins on it.
+- Players can join grids.
+    - Only grids that have less than 2 players joined.
+    - Player can't join in a grid that he is already joined.
+- Players can check (mark) on a grid.
+    - Only on grids that is not already finished.
+    - Player can't check on a position that is already checked.
+    - Players can't check twice in a row.
+    - Players can't check in a invalid position (the grid is a 3x3 array, so he can't check on 4xN position, for example).
+- Determining if a grid has a winner or it's a tie:
+    - The logic used to determine if the game has a winner uses Magic Square logic. It consists in 3x3 grid where each position has a value, the sum of the positions of each row, column or diagonal must be 15.
+        - https://en.wikipedia.org/wiki/Magic_square
+    - I used permutation to determine all possibilities of 3 positions checked by the player in the grid, then I iterate all arrays determining if the sum of the items is equal to 15.
+        - Permutation class is the src/Helper/Combinations.php.
+            - Took from here: http://stackoverflow.com/questions/3742506/php-array-combinations
+        - The player is the winner if one of these array sum's is equal to 15. 
+            - Logic is on the method flushGridResult on src/Core/GameBundle/Service/GridService.php class.
+    - A tie is set on a grid that doesn't have a winner after 7 marks.
 
 ## How to use it.
 
@@ -76,3 +108,22 @@ curl -b ~/cookies.txt -H "Content-Type: application/json" -X POST -d '{"grid": {
     
 - Foo checks position 2x3 and wins the game marking all positions on the third column!
     - curl -b ~/foo-cookies.txt -H "Content-Type: application/json" -X POST -d '{"grid": {"id": 1}, "colPos": 3, "rowPos": 2}' http://localhost:8000/app_dev.php/api/gridcheck/saves
+    
+### Get the list of all active grids:
+- curl -b ~/cookies.txt -H "Content-Type: application/json" -X GET http://localhost:8000/app_dev.php/api/grid/autocomplete
+    - Paginated:
+        - curl -b ~/cookies.txt -H "Content-Type: application/json" -X GET http://localhost:8000/app_dev.php/api/grid/search
+        - GET params:
+            - page: int
+            - orderBy: g.{field} (example: g.id)
+            - sortBy: asc,desc 
+    
+
+### Get the list of all active players:
+- curl -b ~/cookies.txt -H "Content-Type: application/json" -X GET http://localhost:8000/app_dev.php/api/player/autocomplete
+    - Paginated:
+        - curl -b ~/cookies.txt -H "Content-Type: application/json" -X GET http://localhost:8000/app_dev.php/api/player/search
+        - GET params:
+            - page: int
+            - orderBy: g.{field} (example: g.id, g.dsName)
+            - sortBy: asc,desc
