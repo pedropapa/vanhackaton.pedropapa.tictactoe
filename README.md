@@ -50,6 +50,42 @@ You can now use the api to play the game!
             - Logic is on the method flushGridResult on src/Core/GameBundle/Service/GridService.php class.
     - A tie is set on a grid that doesn't have a winner after 7 marks.
 
+## All Api's
+- /api/player/{id}.{_format}
+- /api/player/delete/{id}.{_format}
+- /api/player/excels/export.{_format}
+- /api/player/pdfs/export.{_format}
+- /api/player/htmls/export.{_format}
+- /api/player/search.{_format}
+- /api/player/saves.{_format}
+- /api/player/autocomplete.{_format}
+- /api/grid/{id}.{_format}
+- /api/grid/delete/{id}.{_format}
+- /api/grid/excels/export.{_format}
+- /api/grid/pdfs/export.{_format}
+- /api/grid/htmls/export.{_format}
+- /api/grid/creates.{_format}
+- /api/grid/joins.{_format}
+- /api/grid/search.{_format}
+- /api/grid/saves.{_format}
+- /api/grid/autocomplete.{_format}
+- /api/gridcheck/{id}.{_format}
+- /api/gridcheck/delete/{id}.{_format}
+- /api/gridcheck/excels/export.{_format}
+- /api/gridcheck/pdfs/export.{_format}
+- /api/gridcheck/htmls/export.{_format}
+- /api/gridcheck/saves.{_format}
+- /api/gridcheck/search.{_format}
+- /api/gridcheck/autocomplete.{_format}
+- /api/playergrid/{id}.{_format}
+- /api/playergrid/delete/{id}.{_format}
+- /api/playergrid/excels/export.{_format}
+- /api/playergrid/pdfs/export.{_format}
+- /api/playergrid/htmls/export.{_format}
+- /api/playergrid/search.{_format}
+- /api/playergrid/saves.{_format}
+- /api/playergrid/autocomplete.{_format}
+
 ## How to use it.
 
 First of all, you need to get an session ID:
