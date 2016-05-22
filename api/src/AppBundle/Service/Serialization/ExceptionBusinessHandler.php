@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\SystemBundle\Services\Serialization;
+namespace AppBundle\Service\Serialization;
 
 use abstraction\business\exception\ExceptionBusiness;
 use JMS\Serializer\Context;
@@ -10,7 +10,7 @@ use \JMS\DiExtraBundle\Annotation as DI;
 
 /**
  * Class ExceptionBusinessHandler
- * @package Core\SystemBundle\Services\Serialization
+ * @package AppBundle\Service\Serialization
  *
  * @DI\Service("system.exceptionbusinesshandler")
  * @DI\Tag("jms_serializer.handler", attributes = {"direction" = "serialization", "format"="json", "type"="abstraction\business\exception\ExceptionBusiness", "method"="serialize"})

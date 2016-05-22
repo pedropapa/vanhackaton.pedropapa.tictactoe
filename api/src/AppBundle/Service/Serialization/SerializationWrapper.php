@@ -1,8 +1,6 @@
 <?php
 
-namespace Core\SystemBundle\Services\Serialization;
-
-use Core\SystemBundle\Services\SerializationUtil;
+namespace AppBundle\Service\Serialization;
 
 /**
  * Classe de apoio usada pelo {@link SerializationUtil} para adicionar grupos a

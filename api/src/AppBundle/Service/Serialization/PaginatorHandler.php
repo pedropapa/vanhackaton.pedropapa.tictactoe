@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\SystemBundle\Services\Serialization;
+namespace AppBundle\Service\Serialization;
 
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator;

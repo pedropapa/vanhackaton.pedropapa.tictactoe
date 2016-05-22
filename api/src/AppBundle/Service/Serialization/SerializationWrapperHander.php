@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\SystemBundle\Services\Serialization;
+namespace AppBundle\Service\Serialization;
 
 use JMS\Serializer\JsonSerializationVisitor;
 use JMS\Serializer\SerializationContext;
@@ -8,10 +8,10 @@ use \JMS\DiExtraBundle\Annotation as DI;
 
 /**
  * Class SerializationWrapperHander
- * @package Core\SystemBundle\Services\Serialization
+ * @package AppBundle\Service\Serialization
  *
  * @DI\Service("system.serializationwrapperhander")
- * @DI\Tag("jms_serializer.handler", attributes = {"direction" = "serialization", "format"="json", "type"="Core\SystemBundle\Services\Serialization\SerializationWrapper", "method"="handleWrapperSerialization"})
+ * @DI\Tag("jms_serializer.handler", attributes = {"direction" = "serialization", "format"="json", "type"="AppBundle\Service\Serialization\SerializationWrapper", "method"="handleWrapperSerialization"})
  */
 class SerializationWrapperHander
 {
